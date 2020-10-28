@@ -2,11 +2,19 @@
 TARGET=funnel-gfx-wc
 LINE=`ack version ../$TARGET/package.json`
 VERSION=`echo $LINE | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+LAST=`cat .version`
 
-echo -- $VERSION
-sed "s/VERSION/$VERSION/g" <.template.html >index.html
+if [ "$VERSION" = "$LAST" ];
+then
+  echo -- skip... [ $VERSION ]
+else
+  echo -- $VERSION
+  exit
+  echo $VERSION > .version
+  sed "s/VERSION/$VERSION/g" <.template.html >index.html
 
-git commit -a -m "bump $VERSION"
-git push
-now
-now --prod
+  git commit -a -m "bump $VERSION"
+  git push
+  now
+  now --prod
+fi
