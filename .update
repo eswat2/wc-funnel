@@ -3,15 +3,16 @@ TARGET=funnel-gfx-wc
 LINE=`ack version ../$TARGET/package.json`
 VERSION=`echo $LINE | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
 LAST=`cat .version`
+PREFIX="--"
 
 if [ "$VERSION" = "$LAST" ];
 then
   if [ $# == 0 ]
   then
-    echo -- skip... [ $VERSION ]
+    printf "%s skip... [ %s ] \n" $PREFIX $VERSION
   fi
 else
-  echo -- $VERSION
+  printf "%s %s \n" $PREFIX $VERSION
   echo $VERSION > .version
   sed "s/VERSION/$VERSION/g" <.template.html >index.html
 
