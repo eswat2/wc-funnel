@@ -6,7 +6,10 @@ LAST=`cat .version`
 
 if [ "$VERSION" = "$LAST" ];
 then
-  echo -- skip... [ $VERSION ]
+  if [ $# == 0 ]
+  then
+    echo -- skip... [ $VERSION ]
+  fi
 else
   echo -- $VERSION
   exit
