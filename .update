@@ -12,7 +12,6 @@ then
   fi
 else
   echo -- $VERSION
-  exit
   echo $VERSION > .version
   sed "s/VERSION/$VERSION/g" <.template.html >index.html
 
